@@ -4,16 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AyushCare – Patient Vitals Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <h1>Patient Live Vitals</h1>
+  <h1>AyushCare – Live Patient Vitals</h1>
 
-  <div class="container" id="vitals">
-    <!-- Vital data rows will be added here by script.js -->
+  <div class="container">
+    <label for="patientSelect"><strong>Select Patient:</strong></label>
+    <select id="patientSelect"></select>
+
+    <div id="vitals"></div>
+
+    <canvas id="vitalsChart" width="400" height="200"></canvas>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const vitalsDisplay = document.getElementById("vitals");
+    const patientSelect = document.getElementById("patientSelect");
+    const ctx = document.getElementById("vitalsChart").getContext("2d");
+
+    let chartInstance = null;
+
+    // Load JSON file with multiple patients
+    fetch("../demo_data/sample_vitals.json")
+      .then(res => res.json())
+      .then(data => {
+        const patients = Object.keys(data);
+
+        // Populate dropdown
+        patients.forEach(pid => {
+          const option = document.createElement("option");
+          option.value = pid;
+          option.textContent = pid;
+          patientSelect.appendChild(option);
+        });
+
+        // Show default first patient
+        showVitals(data[patients[0]], patients[0]);
+
+        // Listen to dropdown change
+        patientSelect.addEventListener("change", () => {
+          const pid = patientSelect.value;
+          showVitals(data[pid], pid);
+        });
+
+        function showVitals(patientData, patientId) {
+          // Clear previous values
+          vitalsDisplay.innerHTML = `
+            <div class="vital"><span class="vital-label">Patient ID</span><span class="vital-value">${patientId}</span></div>
+            <div class="vital"><span class="vital-label">Temperature (°C)</span><span class="vital-value">${patientData.temperature}</span></div>
+            <div class="vital"><span class="vital-label">Heart Rate (BPM)</span><span class="vital-value">${patientData.heart_rate}</span></div>
+            <div class="vital"><span class="vital-label">SpO₂ (%)</span><span class="vital-value">${patientData.spo2}</span></div>
+            <div class="vital"><span class="vital-label">Blood Pressure</span><span class="vital-value">${patientData.bp}</span></div>
+            <div class="vital"><span class="vital-label">Respiratory Rate</span><span class="vital-value">${patientData.respiratory_rate}</span></div>
+          `;
+
+          // Update chart
+          const chartData = {
+            labels: ["Temp (°C)", "HR", "SpO₂", "Resp. Rate"],
+            datasets: [{
+              label: `Vitals for ${patientId}`,
+              backgroundColor: "#3498db",
+              data: [
+                patientData.temperature,
+                patientData.heart_rate,
+                patientData.spo2,
+                patientData.respiratory_rate
+              ]
+            }]
+          };
+
+          if (chartInstance) {
+            chartInstance.destroy();
+          }
+
+          chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  suggestedMax: 150
+                }
+              }
+            }
+          });
+        }
+      });
+  </script>
 </body>
 </html>
