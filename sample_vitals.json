@@ -1,8 +1,23 @@
 {
-  "patient_id": "P001",
-  "temperature": 36.8,
-  "heart_rate": 74,
-  "spo2": 98,
-  "bp": "118/76",
-  "respiratory_rate": 16
+  "P001": {
+    "temperature": 36.8,
+    "heart_rate": 74,
+    "spo2": 98,
+    "bp": "118/76",
+    "respiratory_rate": 16
+  },
+  "P002": {
+    "temperature": 38.2,
+    "heart_rate": 88,
+    "spo2": 94,
+    "bp": "130/85",
+    "respiratory_rate": 20
+  },
+  "P003": {
+    "temperature": 37.1,
+    "heart_rate": 70,
+    "spo2": 99,
+    "bp": "120/80",
+    "respiratory_rate": 18
+  }
 }
