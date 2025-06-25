@@ -1,0 +1,8 @@
+{
+  "patient_id": "P001",
+  "temperature": 36.8,
+  "heart_rate": 74,
+  "spo2": 98,
+  "bp": "118/76",
+  "respiratory_rate": 16
+}
