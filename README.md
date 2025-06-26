@@ -103,7 +103,11 @@ B.Tech ECE | IoT & Embedded Systems
 🔗 LinkedIn: Naga Venkata Sai Meghana Kovvada
 
 🔗 Project Link
-👉 View project here ([url](https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/))]
-
+👉 View project here ([View the dashboard](https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/))]
+**Note**
+Enter the following credentials- 
+     Username - doctor 
+     Password - 1234
+     
 📃 License
 This project is licensed under the MIT License.
