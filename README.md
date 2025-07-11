@@ -1,6 +1,7 @@
 # AyushCare – Rural Health Monitoring with IoT
 
-![AyushCare Banner](https://via.placeholder.com/1000x250?text=AyushCare+–+IoT+Health+Monitoring+for+Rural+India)
+![AyushCare Banner](<img width="1536" height="1024" alt="AyushCare_banner" src="https://github.com/user-attachments/assets/1a5cdf74-edc1-48ce-8881-6a0bca627fbc" />
+)
 
 ## 💡 Project Overview
 
@@ -104,10 +105,10 @@ B.Tech ECE | IoT & Embedded Systems
 
 🔗 Project Link
 👉 View project here ([View the dashboard](https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/))]
+
 **Note**
-Enter the following credentials- 
-     Username - doctor 
-     Password - 1234
+##Enter the following credentials- 
+     [Username - doctor and Password - 1234]
      
 📃 License
 This project is licensed under the MIT License.
