@@ -63,16 +63,27 @@
 ## 📁 Repository Structure
 
 AyushCare/
+
 ├── Arduino_Code/
+
 │ └── ayushcare_monitor.ino
+
 ├── Mobile_Dashboard/
+
 │ └── blynk_setup_guide.pdf
+
 ├── Circuit_Diagram/
+
 │ └── ayushcare_circuit.fzz
+
 ├── UI_Mockups/
+
 │ └── doctor_dashboard_mockup.png
+
 ├── Docs/
+
 │ └── project_report.pdf
+
 └── README.md
 
 ---
@@ -98,10 +109,12 @@ AyushCare/
 - Monitor on Blynk or Firebase dashboard
 
 👤 Author
-K.N.V Sai Meghana 
+*K.N.V Sai Meghana* 
 B.Tech ECE | IoT & Embedded Systems
-🔗 GitHub: saimeghana
-🔗 LinkedIn: Naga Venkata Sai Meghana Kovvada
+
+🔗 GitHub: [View](https://github.com/SaiMeghana14)
+
+🔗 LinkedIn: [View](https://www.linkedin.com/in/naga-venkata-sai-meghana-kovvada-131b51259)
 
 🔗 Project Link
 👉 View project here ([View the dashboard](https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/))]
