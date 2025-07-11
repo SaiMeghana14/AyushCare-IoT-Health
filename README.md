@@ -1,7 +1,6 @@
 # AyushCare – Rural Health Monitoring with IoT
 
-![AyushCare Banner](<img width="1536" height="1024" alt="AyushCare_banner" src="https://github.com/user-attachments/assets/1a5cdf74-edc1-48ce-8881-6a0bca627fbc" />
-)
+![AyushCare Banner][https://github.com/yourusername/ayushcare-iot/blob/main/AyushCare_Banner.png?raw=true]
 
 ## 💡 Project Overview
 
