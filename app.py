@@ -3,23 +3,57 @@ import json
 import plotly.graph_objects as go
 import pandas as pd
 
-# --- USER LOGIN (demo purpose) ---
+# --- USER LOGIN ---
+# Initialize storage for users
+if "users" not in st.session_state:
+    st.session_state.users = {}  # {username: password}
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
+if "current_user" not in st.session_state:
+    st.session_state.current_user = None
 
+st.title("🔐 AyushCare Login System")
+
+# Show login or register form
 if not st.session_state.logged_in:
-    with st.form("login_form"):
-        st.title("🔐 AyushCare Login")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        submitted = st.form_submit_button("Login")
-        if submitted:
-            if username == "doctor" and password == "1234":
-                st.session_state.logged_in = True
-                st.success("Welcome, Doctor!")
-            else:
-                st.error("Invalid credentials.")
-    st.stop()
+    option = st.radio("Choose an option", ["Register", "Login"])
+
+    if option == "Register":
+        with st.form("register_form"):
+            reg_username = st.text_input("Choose a Username")
+            reg_password = st.text_input("Choose a Password", type="password")
+            reg_submit = st.form_submit_button("Register")
+
+            if reg_submit:
+                if reg_username in st.session_state.users:
+                    st.error("Username already exists. Please choose another.")
+                elif not reg_username or not reg_password:
+                    st.error("Username and Password cannot be empty.")
+                else:
+                    st.session_state.users[reg_username] = reg_password
+                    st.success("Registration successful! Please login now.")
+
+    elif option == "Login":
+        with st.form("login_form"):
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            login_submit = st.form_submit_button("Login")
+
+            if login_submit:
+                if username in st.session_state.users and st.session_state.users[username] == password:
+                    st.session_state.logged_in = True
+                    st.session_state.current_user = username
+                    st.success(f"Welcome, {username}!")
+                    st.experimental_rerun()
+                else:
+                    st.error("Invalid credentials.")
+
+else:
+    st.success(f"✅ Logged in as {st.session_state.current_user}")
+    if st.button("Logout"):
+        st.session_state.logged_in = False
+        st.session_state.current_user = None
+        st.experimental_rerun()
 
 # --- MAIN DASHBOARD ---
 st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
