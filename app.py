@@ -57,8 +57,8 @@ def page_login():
             st.error("Invalid username or password!")
 
 if "page" not in st.session_state:
-    st.session_state.page = "login"
-
+    st.session_state.page = "register"  # show register first
+    
 if st.session_state.page == "register":
     page_register()
 elif st.session_state.page == "login":
