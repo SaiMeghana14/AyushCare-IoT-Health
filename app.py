@@ -57,12 +57,21 @@ def page_dashboard():
         st.session_state.page = "login"
 
 # Navigation
+if "page" not in st.session_state:
+    st.session_state.page = "register"  # Set default only once
+
 if st.session_state.page == "register":
-    page_register()
+    if page_register():  # return True when register successful
+        st.session_state.page = "login"  # Move to login
+        st.experimental_rerun()
+
 elif st.session_state.page == "login":
-    page_login()
+    if page_login():  # return True when login successful
+        st.session_state.page = "dashboard"
+        st.experimental_rerun()
+
 elif st.session_state.page == "dashboard":
-    page_dashboard()
+    st.write("Dashboard content here")
 
 # --- MAIN DASHBOARD ---
 st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
