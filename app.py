@@ -4,72 +4,67 @@ import plotly.graph_objects as go
 from pathlib import Path
 import pandas as pd
 
-# Initialize storage for credentials (temporary for demo)
-if "users" not in st.session_state:
-    st.session_state.users = {}  # format: {"username": "password"}
+USERS_FILE = "users.json"
 
-if "page" not in st.session_state:
-    st.session_state.page = "register"  # first page
+# Load existing users
+def load_users():
+    if os.path.exists(USERS_FILE):
+        with open(USERS_FILE, "r") as f:
+            return json.load(f)
+    return {}
 
-if "logged_in_user" not in st.session_state:
-    st.session_state.logged_in_user = None
+# Save users
+def save_users(users):
+    with open(USERS_FILE, "w") as f:
+        json.dump(users, f)
 
-
-def go_to(page_name):
-    st.session_state.page = page_name
-
-
-def register_page():
+def page_register():
     st.title("Register")
     username = st.text_input("Choose a Username")
     password = st.text_input("Choose a Password", type="password")
     confirm_password = st.text_input("Confirm Password", type="password")
 
     if st.button("Register"):
-        if not username or not password:
-            st.error("Please fill in all fields.")
-        elif password != confirm_password:
-            st.error("Passwords do not match.")
-        elif username in st.session_state.users:
-            st.error("Username already exists.")
-        else:
-            st.session_state.users[username] = password
-            st.success("Registration successful! Please log in.")
-            go_to("login")
+        if password != confirm_password:
+            st.error("Passwords do not match!")
+            return
 
+        users = load_users()
+        if username in users:
+            st.error("Username already exists!")
+            return
 
-def login_page():
+        users[username] = password
+        save_users(users)
+        st.success("Registration successful! Please log in.")
+        st.session_state.page = "login"
+        st.experimental_rerun()
+
+def page_login():
     st.title("Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        if username in st.session_state.users and st.session_state.users[username] == password:
-            st.session_state.logged_in_user = username
+        users = load_users()
+        if username in users and users[username] == password:
+            st.session_state.logged_in = True
+            st.session_state.username = username
             st.success(f"Welcome, {username}!")
-            go_to("dashboard")
+            st.session_state.page = "dashboard"
+            st.experimental_rerun()
         else:
-            st.error("Invalid username or password.")
+            st.error("Invalid username or password!")
 
+if "page" not in st.session_state:
+    st.session_state.page = "login"
 
-def dashboard_page():
-    st.title("Main Dashboard")
-    st.write(f"Hello, **{st.session_state.logged_in_user}**! 🎉")
-    if st.button("Logout"):
-        st.session_state.logged_in_user = None
-        go_to("login")
-
-
-# Page Router
 if st.session_state.page == "register":
-    register_page()
+    page_register()
 elif st.session_state.page == "login":
-    login_page()
+    page_login()
 elif st.session_state.page == "dashboard":
-    if st.session_state.logged_in_user:
-        dashboard_page()
-    else:
-        go_to("login")
+    st.write("Dashboard content here")
 
 # --- MAIN DASHBOARD ---
 st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
