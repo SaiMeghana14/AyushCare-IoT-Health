@@ -18,53 +18,51 @@ def save_users(users):
     with open(USERS_FILE, "w") as f:
         json.dump(users, f)
 
+# Initialize session variables
+if "page" not in st.session_state:
+    st.session_state.page = "register"
+if "users" not in st.session_state:
+    st.session_state.users = {}  # Store registered usernames & passwords
+
 def page_register():
     st.title("Register")
     username = st.text_input("Choose a Username")
     password = st.text_input("Choose a Password", type="password")
-    confirm_password = st.text_input("Confirm Password", type="password")
-
     if st.button("Register"):
-        if password != confirm_password:
-            st.error("Passwords do not match!")
-            return
-
-        users = load_users()
-        if username in users:
-            st.error("Username already exists!")
-            return
-
-        users[username] = password
-        save_users(users)
-        st.success("Registration successful! Please log in.")
-        st.session_state.page = "login"
-        st.experimental_rerun()
+        if username and password:
+            if username in st.session_state.users:
+                st.error("Username already exists!")
+            else:
+                st.session_state.users[username] = password
+                st.success("Registered successfully! Please log in.")
+                st.session_state.page = "login"
+        else:
+            st.error("Please fill in both fields.")
 
 def page_login():
     st.title("Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
-
     if st.button("Login"):
-        users = load_users()
-        if username in users and users[username] == password:
-            st.session_state.logged_in = True
-            st.session_state.username = username
-            st.success(f"Welcome, {username}!")
+        if username in st.session_state.users and st.session_state.users[username] == password:
+            st.success("Login successful!")
             st.session_state.page = "dashboard"
-            st.experimental_rerun()
         else:
-            st.error("Invalid username or password!")
+            st.error("Invalid username or password.")
 
-if "page" not in st.session_state:
-    st.session_state.page = "register"  # show register first
-    
+def page_dashboard():
+    st.title("Dashboard")
+    st.write("Welcome to your dashboard!")
+    if st.button("Logout"):
+        st.session_state.page = "login"
+
+# Navigation
 if st.session_state.page == "register":
     page_register()
 elif st.session_state.page == "login":
     page_login()
 elif st.session_state.page == "dashboard":
-    st.write("Dashboard content here")
+    page_dashboard()
 
 # --- MAIN DASHBOARD ---
 st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
