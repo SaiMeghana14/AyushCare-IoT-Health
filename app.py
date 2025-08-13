@@ -4,56 +4,69 @@ import plotly.graph_objects as go
 import pandas as pd
 
 # --- USER LOGIN ---
-# Initialize storage for users
+# Initialize session state variables
 if "users" not in st.session_state:
-    st.session_state.users = {}  # {username: password}
+    st.session_state.users = {}  # Store registered users {username: password}
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "current_user" not in st.session_state:
     st.session_state.current_user = None
 
-st.title("🔐 AyushCare Login System")
+# Registration Page
+def register():
+    st.subheader("📝 Register")
+    username = st.text_input("Choose a username", key="reg_user")
+    password = st.text_input("Choose a password", type="password", key="reg_pass")
+    confirm = st.text_input("Confirm password", type="password", key="reg_confirm")
+    if st.button("Register"):
+        if username in st.session_state.users:
+            st.error("Username already exists. Please choose another.")
+        elif password != confirm:
+            st.error("Passwords do not match.")
+        elif username == "" or password == "":
+            st.error("Please fill in all fields.")
+        else:
+            st.session_state.users[username] = password
+            st.success("Registration successful! Please log in.")
 
-# Show login or register form
-if not st.session_state.logged_in:
-    option = st.radio("Choose an option", ["Register", "Login"])
+# Login Page
+def login():
+    st.subheader("🔐 Login")
+    username = st.text_input("Username", key="login_user")
+    password = st.text_input("Password", type="password", key="login_pass")
+    if st.button("Login"):
+        if username in st.session_state.users and st.session_state.users[username] == password:
+            st.session_state.logged_in = True
+            st.session_state.current_user = username
+            st.success(f"Welcome, {username}!")
+            st.experimental_rerun()
+        else:
+            st.error("Invalid username or password.")
 
-    if option == "Register":
-        with st.form("register_form"):
-            reg_username = st.text_input("Choose a Username")
-            reg_password = st.text_input("Choose a Password", type="password")
-            reg_submit = st.form_submit_button("Register")
-
-            if reg_submit:
-                if reg_username in st.session_state.users:
-                    st.error("Username already exists. Please choose another.")
-                elif not reg_username or not reg_password:
-                    st.error("Username and Password cannot be empty.")
-                else:
-                    st.session_state.users[reg_username] = reg_password
-                    st.success("Registration successful! Please login now.")
-
-    elif option == "Login":
-        with st.form("login_form"):
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
-            login_submit = st.form_submit_button("Login")
-
-            if login_submit:
-                if username in st.session_state.users and st.session_state.users[username] == password:
-                    st.session_state.logged_in = True
-                    st.session_state.current_user = username
-                    st.success(f"Welcome, {username}!")
-                    st.experimental_rerun()
-                else:
-                    st.error("Invalid credentials.")
-
-else:
-    st.success(f"✅ Logged in as {st.session_state.current_user}")
-    if st.button("Logout"):
+# Logout Button
+def logout():
+    if st.button("🚪 Logout"):
         st.session_state.logged_in = False
         st.session_state.current_user = None
         st.experimental_rerun()
+
+# Main app
+def main_app():
+    st.title("🏥 AyushCare Dashboard")
+    st.write(f"Hello, {st.session_state.current_user}!")
+    logout()
+    st.write("📊 Here is your main dashboard content...")
+
+# Show Register/Login first
+if not st.session_state.logged_in:
+    st.title("AyushCare - Access Portal")
+    menu = st.radio("Select Option", ["Login", "Register"])
+    if menu == "Login":
+        login()
+    else:
+        register()
+else:
+    main_app()
 
 # --- MAIN DASHBOARD ---
 st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
