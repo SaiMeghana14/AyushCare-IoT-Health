@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 from pathlib import Path
 import pandas as pd
 
+st.set_page_config(page_title="AyushCare", page_icon="🩺", layout="centered")
+
 USERS_FILE = "users.json"
 
 # Load existing users
@@ -16,66 +18,89 @@ def load_users():
 # Save users
 def save_users(users):
     with open(USERS_FILE, "w") as f:
-        json.dump(users, f)
+        json.dump(users, f, indent=4)
 
-# Initialize session variables
+# Initialize session state
 if "page" not in st.session_state:
     st.session_state.page = "register"
 if "users" not in st.session_state:
-    st.session_state.users = {}  # Store registered usernames & passwords
+    st.session_state.users = load_users()
+if "current_user" not in st.session_state:
+    st.session_state.current_user = None
+
+# ------------------ UI Pages ---------------------
 
 def page_register():
-    st.title("Register")
-    username = st.text_input("Choose a Username")
-    password = st.text_input("Choose a Password", type="password")
-    if st.button("Register"):
-        if username and password:
-            if username in st.session_state.users:
-                st.error("Username already exists!")
+    st.markdown("<h2 style='text-align:center;'>🆕 Create Your AyushCare Account</h2>", unsafe_allow_html=True)
+
+    with st.container():
+        st.markdown("### 👤 User Details")
+        username = st.text_input("Choose a Username", placeholder="Enter username")
+        password = st.text_input("Create a Password", type="password", placeholder="Enter password")
+
+        if st.button("Create Account", use_container_width=True):
+            if username and password:
+                if username in st.session_state.users:
+                    st.error("⚠ Username already exists! Try another.")
+                else:
+                    st.session_state.users[username] = password
+                    save_users(st.session_state.users)
+                    st.success("🎉 Registration successful! Please log in.")
+                    st.session_state.page = "login"
             else:
-                st.session_state.users[username] = password
-                st.success("Registered successfully! Please log in.")
-                st.session_state.page = "login"
-        else:
-            st.error("Please fill in both fields.")
+                st.error("❗ Please fill in both fields.")
 
-def page_login():
-    st.title("Login")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    if st.button("Login"):
-        if username in st.session_state.users and st.session_state.users[username] == password:
-            st.success("Login successful!")
-            st.session_state.page = "dashboard"
-        else:
-            st.error("Invalid username or password.")
-
-def page_dashboard():
-    st.title("Dashboard")
-    st.write("Welcome to your dashboard!")
-    if st.button("Logout"):
+    st.write("---")
+    if st.button("Already have an account? Login →", use_container_width=True):
         st.session_state.page = "login"
 
-# Navigation
-if "page" not in st.session_state:
-    st.session_state.page = "register"  # Set default only once
+
+def page_login():
+    st.markdown("<h2 style='text-align:center;'>🔐 Login to AyushCare</h2>", unsafe_allow_html=True)
+
+    with st.container():
+        st.markdown("### 🔑 Login Credentials")
+        username = st.text_input("Username", placeholder="Enter username")
+        password = st.text_input("Password", type="password", placeholder="Enter password")
+
+        if st.button("Login", use_container_width=True):
+            if username in st.session_state.users and st.session_state.users[username] == password:
+                st.session_state.current_user = username
+                st.success("✅ Login successful!")
+                st.session_state.page = "dashboard"
+            else:
+                st.error("❌ Invalid username or password.")
+
+    st.write("---")
+    if st.button("New user? Register →", use_container_width=True):
+        st.session_state.page = "register"
+
+def page_dashboard():
+    st.markdown(f"<h2 style='text-align:center;'>🏥 AyushCare Dashboard</h2>", page_icon="🩺", unsafe_allow_html=True)
+    st.write(f"### Welcome, **{st.session_state.current_user}** 👋")
+    st.write("Your health monitoring hub is ready!")
+
+    st.success("✔ Sensor data, alerts & patient history will appear here.")
+
+    if st.button("Logout", use_container_width=True):
+        st.session_state.page = "login"
+        st.session_state.current_user = None
+
+# ------------------ Navigation ---------------------
 
 if st.session_state.page == "register":
-    if page_register():  # return True when register successful
-        st.session_state.page = "login"  # Move to login
-        st.experimental_rerun()
+    page_register()
 
 elif st.session_state.page == "login":
-    if page_login():  # return True when login successful
-        st.session_state.page = "dashboard"
-        st.experimental_rerun()
+    page_login()
 
 elif st.session_state.page == "dashboard":
-    st.write("Dashboard content here")
+    if st.session_state.current_user:
+        page_dashboard()
+    else:
+        st.session_state.page = "login"
 
 # --- MAIN DASHBOARD ---
-st.set_page_config(page_title="AyushCare Dashboard", layout="centered", page_icon="🩺")
-
 st.sidebar.title("☰ Options")
 dark_mode = st.sidebar.checkbox("🌙 Dark Mode")
 data_source = st.sidebar.radio("📦 Data Source", ["Local JSON", "Upload CSV"])
