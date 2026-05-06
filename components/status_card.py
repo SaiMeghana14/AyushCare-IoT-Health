@@ -60,7 +60,13 @@ def render_status_card(risk_score, risk_level, risk_color, patient_status):
         score_fig = go.Figure(go.Indicator(
             mode="gauge+number",
             value=risk_score,
-            title={"text": "Health Score"},
+            title={
+    "text": "<b>Health Score</b>",
+    "font": {
+        "size": 28,
+        "color": "#0f172a"
+    }
+},
             gauge={
                 "axis": {"range": [0, 100]},
                 "bar": {"color": "#00d4ff"}
