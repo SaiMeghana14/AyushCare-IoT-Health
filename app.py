@@ -1,8 +1,8 @@
 import streamlit as st
 
-from pages.login import page_login
-from pages.register import page_register
-from pages.dashboard import page_dashboard
+from views.login import page_login
+from views.register import page_register
+from views.dashboard import page_dashboard
 
 # --------------------------------------------------------------
 # PAGE CONFIG
