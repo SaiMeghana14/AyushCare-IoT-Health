@@ -1,4 +1,6 @@
 streamlit
-plotly
-pandas
 boto3
+plotly
+numpy
+pandas
+streamlit-autorefresh
