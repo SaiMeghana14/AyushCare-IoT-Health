@@ -15,6 +15,23 @@ st.set_page_config(
 )
 
 # --------------------------------------------------------------
+# GLOBAL CSS
+# --------------------------------------------------------------
+st.markdown("""
+<style>
+
+.stApp {
+    background: linear-gradient(
+        135deg,
+        #eef7ff,
+        #dbeafe
+    );
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# --------------------------------------------------------------
 # SESSION STATE
 # --------------------------------------------------------------
 if "page" not in st.session_state:
