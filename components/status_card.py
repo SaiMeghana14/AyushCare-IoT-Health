@@ -5,7 +5,7 @@ from datetime import datetime
 
 def render_status_card(risk_score, risk_level, risk_color, patient_status):
 
-    col1, col2 = st.columns([2,1])
+    col1, col2 = st.columns([3,2])
 
     with col1:
 
