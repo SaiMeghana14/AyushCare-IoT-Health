@@ -1,3 +1,4 @@
+import re
 import streamlit as st
 import json, os, time, hashlib
 import plotly.graph_objects as go
@@ -10,6 +11,60 @@ from datetime import datetime
 # PAGE CONFIG
 # --------------------------------------------------------------
 st.set_page_config(page_title="AyushCare", page_icon="🩺", layout="centered")
+
+# --------------------------------------------------------------
+# CUSTOM STYLING
+# --------------------------------------------------------------
+st.markdown("""
+<style>
+
+.main {
+    background: linear-gradient(135deg, #e0f7fa, #f1f8ff);
+}
+
+.auth-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-top: 2rem;
+}
+
+.title-text {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #0077b6;
+}
+
+.subtitle-text {
+    text-align: center;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.stButton > button {
+    width: 100%;
+    border-radius: 12px;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #0077b6, #00b4d8);
+    color: white;
+    border: none;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(90deg, #023e8a, #0077b6);
+    color: white;
+}
+
+input {
+    border-radius: 10px !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 USERS_FILE = "users.json"
 
@@ -53,61 +108,152 @@ def save_users(users):
 # Initialize session vars
 if "page" not in st.session_state:
     st.session_state.page = "register"
+
 if "users" not in st.session_state:
     st.session_state.users = load_users()
+
 if "current_user" not in st.session_state:
     st.session_state.current_user = None
-
 # --------------------------------------------------------------
-# PAGE: REGISTER
+# MODERN REGISTER PAGE
 # --------------------------------------------------------------
 def page_register():
-    st.markdown("<h2 style='text-align:center;'>🆕 Create Your AyushCare Account</h2>", unsafe_allow_html=True)
-    username = st.text_input("Choose a Username", placeholder="Enter username")
-    password = st.text_input("Create a Password", placeholder="Enter password", type="password")
 
-    if st.button("Create Account", use_container_width=True):
-        if username and password:
-            if username in st.session_state.users:
-                st.error("⚠ Username already exists! Try another.")
-            else:
-                st.session_state.users[username] = password
-                save_users(st.session_state.users)
-                st.success("🎉 Registration successful! Please log in.")
-                st.session_state.page = "login"
+    st.markdown("<div class='title-text'>🩺 AyushCare</div>", unsafe_allow_html=True)
+    st.markdown("<div class='subtitle-text'>Create your healthcare monitoring account</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='auth-box'>", unsafe_allow_html=True)
+
+    st.subheader("🆕 Register")
+
+    full_name = st.text_input("Full Name")
+    email = st.text_input("Email Address")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    confirm_password = st.text_input("Confirm Password", type="password")
+
+    if st.button("✨ Create Account"):
+
+        if not all([full_name, email, username, password, confirm_password]):
+            st.error("Please fill all fields.")
+
+        elif username in st.session_state.users:
+            st.error("Username already exists.")
+
+        elif password != confirm_password:
+            st.error("Passwords do not match.")
+
+        elif len(password) < 6:
+            st.warning("Password should contain at least 6 characters.")
+
+        elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            st.warning("Enter a valid email address.")
+
         else:
-            st.error("❗ Please fill in both fields.")
+            st.session_state.users[username] = {
+                "name": full_name,
+                "email": email,
+                "password": password
+            }
+
+            save_users(st.session_state.users)
+
+            st.success("🎉 Account created successfully!")
+            st.balloons()
+
+            time.sleep(1)
+            st.session_state.page = "login"
+            st.rerun()
 
     st.write("---")
-    if st.button("Already have an account? Login →", use_container_width=True):
-        st.session_state.page = "login"
 
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+        if st.button("🔐 Already have an account? Login"):
+            st.session_state.page = "login"
+            st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)
+    
 # --------------------------------------------------------------
-# PAGE: LOGIN
+# MODERN LOGIN PAGE
 # --------------------------------------------------------------
 def page_login():
-    st.markdown("<h2 style='text-align:center;'>🔐 Login to AyushCare</h2>", unsafe_allow_html=True)
-    username = st.text_input("Username", placeholder="Enter username")
-    password = st.text_input("Password", placeholder="Enter password", type="password")
 
-    if st.button("Login", use_container_width=True):
-        if username in st.session_state.users and st.session_state.users[username] == password:
-            st.session_state.current_user = username
-            st.success("✅ Login successful!")
-            st.session_state.page = "dashboard"
+    st.markdown("<div class='title-text'>🏥 AyushCare</div>", unsafe_allow_html=True)
+    st.markdown("<div class='subtitle-text'>AI-Powered Rural Health Monitoring System</div>", unsafe_allow_html=True)
+
+    st.markdown("<div class='auth-box'>", unsafe_allow_html=True)
+
+    st.subheader("🔐 Secure Login")
+
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+
+    remember_me = st.checkbox("Remember Me")
+
+    if st.button("🚀 Login"):
+
+        if username in st.session_state.users:
+
+            user_data = st.session_state.users[username]
+
+            if isinstance(user_data, dict):
+                correct_password = user_data["password"]
+                full_name = user_data["name"]
+            else:
+                correct_password = user_data
+                full_name = username
+
+            if password == correct_password:
+                st.session_state.current_user = full_name
+
+                st.success("✅ Login successful!")
+                time.sleep(1)
+
+                st.session_state.page = "dashboard"
+                st.rerun()
+
+            else:
+                st.error("❌ Incorrect password")
+
         else:
-            st.error("❌ Invalid username or password.")
+            st.error("❌ User not found")
 
     st.write("---")
-    if st.button("New user? Register →", use_container_width=True):
-        st.session_state.page = "register"
+
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+        if st.button("🆕 Create New Account"):
+            st.session_state.page = "register"
+            st.rerun()
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # --------------------------------------------------------------
 # PAGE: DASHBOARD (UI only)
 # --------------------------------------------------------------
 def page_dashboard():
     st.markdown(f"<h2 style='text-align:center;'>🏥 AyushCare Dashboard</h2>", unsafe_allow_html=True)
-    st.write(f"### Welcome, **{st.session_state.current_user}** 👋")
+    st.markdown(
+    f"""
+    <div style='
+        background: linear-gradient(90deg,#0077b6,#00b4d8);
+        padding: 1rem;
+        border-radius: 15px;
+        color: white;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    '>
+        👋 Welcome to AyushCare, {st.session_state.current_user}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     st.write("Real-time vitals monitoring starts below.")
 
 # --------------------------------------------------------------
