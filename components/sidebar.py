@@ -35,3 +35,8 @@ def render_sidebar():
     st.sidebar.success("Temperature Sensor Online")
 
     return dark_mode, data_source, show_gauge
+    
+    st.sidebar.markdown("---")
+    st.sidebar.info(
+        "🌿 AyushCare v2.0\n\nAWS + IoT + AI Healthcare Platform"
+)
