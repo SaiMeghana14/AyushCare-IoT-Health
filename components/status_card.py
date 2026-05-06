@@ -46,6 +46,8 @@ def render_status_card(risk_score, risk_level, risk_color, patient_status):
             }
         ))
 
-        score_fig.update_layout(height=320)
+        score_fig.update_layout(height=320,paper_bgcolor="rgba(0,0,0,0)",
+plot_bgcolor="rgba(0,0,0,0)",
+font=dict(color="white"))
 
         st.plotly_chart(score_fig, use_container_width=True)
