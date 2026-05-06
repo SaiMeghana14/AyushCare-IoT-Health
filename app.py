@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 import boto3
 from datetime import datetime
+from decimal import Decimal
 
 # --------------------------------------------------------------
 # PAGE CONFIG
@@ -289,19 +290,30 @@ def load_json_data():
 # --------------------------------------------------------------
 # SAVE DATA TO AWS DYNAMODB
 # --------------------------------------------------------------
+from decimal import Decimal
+
+# --------------------------------------------------------------
+# SAVE DATA TO AWS DYNAMODB
+# --------------------------------------------------------------
 def save_to_dynamodb(patient_id, vitals):
     try:
         table.put_item(
             Item={
                 "patient_id": patient_id,
                 "timestamp": datetime.now().isoformat(),
-                "temperature": vitals["temperature"],
-                "heart_rate": vitals["heart_rate"],
-                "spo2": vitals["spo2"],
+
+                "temperature": Decimal(str(vitals["temperature"])),
+                "heart_rate": Decimal(str(vitals["heart_rate"])),
+                "spo2": Decimal(str(vitals["spo2"])),
+
                 "bp": vitals["bp"],
-                "respiratory_rate": vitals["respiratory_rate"]
+
+                "respiratory_rate": Decimal(
+                    str(vitals["respiratory_rate"])
+                )
             }
         )
+
     except Exception as e:
         st.warning(f"AWS Upload Failed: {e}")
 
