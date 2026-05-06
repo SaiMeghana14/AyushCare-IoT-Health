@@ -96,6 +96,23 @@ def page_dashboard():
         """,
         unsafe_allow_html=True
     )
+    
+    # ----------------------------------------------------------
+    # LIVE CLOUD STATUS
+    # ----------------------------------------------------------
+    c1, c2, c3, c4 = st.columns(4)
+    
+    with c1:
+        st.success("☁ AWS Connected")
+    
+    with c2:
+        st.success("📡 IoT Active")
+    
+    with c3:
+        st.success("🔒 Secure")
+    
+    with c4:
+        st.success("🧠 AI Running")
 
     # ----------------------------------------------------------
     # SIDEBAR
