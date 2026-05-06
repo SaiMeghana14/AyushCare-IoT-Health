@@ -1,127 +1,330 @@
-# AyushCare – Rural Health Monitoring with IoT
+# 🌿 AyushCare – AI-Powered Rural Health Monitoring System
 
-![AyushCare Banner][(https://raw.githubusercontent.com/SaiMeghana14/AyushCare-IoT-Health/refs/heads/main/AyushCare_banner.png)]
-
-## 💡 Project Overview
-
-**AyushCare** is a smart IoT-based health monitoring system designed to support **rural communities** by enabling real-time tracking of vital signs like **heart rate, SpO₂, body temperature**, and **blood pressure**. This system sends patient data to the cloud, allowing **remote doctors** and **health workers** to monitor health conditions and provide timely alerts and intervention.
+![AyushCare Banner](https://raw.githubusercontent.com/SaiMeghana14/AyushCare-IoT-Health/refs/heads/main/AyushCare_banner.png)
 
 ---
 
-## 🎯 Key Features
+# 🏥 Project Overview
 
-- 📡 Real-time monitoring of vital parameters (HR, SpO₂, Temp, BP)
-- ☁️ Cloud integration using **Blynk IoT** / **Firebase**
-- 📱 Doctor dashboard for patient history and alerts
-- 🔔 Instant mobile notifications for abnormal values
-- 🧾 Patient health record storage
-- 🌍 Designed for **low-resource, rural environments**
+**AyushCare** is an advanced **AI-powered IoT healthcare monitoring platform** designed to improve healthcare accessibility in **rural and remote communities**.
 
----
+The system continuously monitors critical patient vitals such as:
 
-## 🧩 Components Used
+- ❤️ Heart Rate
+- 🫁 SpO₂ (Oxygen Saturation)
+- 🌡 Body Temperature
+- 🩸 Blood Pressure
+- 🌬 Respiratory Rate
 
-| Component          | Description                        |
-|-------------------|------------------------------------|
-| ESP32 / NodeMCU    | Wi-Fi-enabled microcontroller      |
-| MAX30100 Sensor    | Measures Heart Rate and SpO₂       |
-| LM35 / DS18B20     | Measures Body Temperature          |
-| OLED/LCD Display   | Displays local sensor data         |
-| Blynk / Firebase   | Cloud sync and dashboard           |
-| Arduino IDE        | Code development environment       |
+using **IoT sensors**, **AWS cloud services**, and an intelligent real-time analytics dashboard.
 
----
+AyushCare enables:
 
-## 🛠️ How It Works
-
-1. Sensors collect patient vitals.
-2. ESP32/NodeMCU reads sensor data and sends it to Blynk/Firebase.
-3. Data is displayed on:
-   - Local OLED/LCD for health workers
-   - Blynk mobile app for doctors/relatives
-4. Alerts are triggered if vitals cross safety thresholds.
-5. All readings are stored for future medical reference.
+✅ Real-time patient monitoring  
+✅ Emergency alert detection  
+✅ AI-powered health insights  
+✅ Cloud-based patient history storage  
+✅ Multi-patient hospital dashboard  
+✅ Remote healthcare assistance for rural areas  
 
 ---
 
-## 🖥️ Screenshots
+# 🚀 Live Demo
 
-> 🔧 [<img width="1279" height="570" alt="Screenshot 2025-07-11 193432" src="https://github.com/user-attachments/assets/bf971634-0031-4330-be08-31948089b3ea" />
-]
-
----
-
-## 🚀 Future Enhancements
-
-- AI-based anomaly detection
-- SMS gateway support for remote areas
-- Offline-first architecture with local caching
-- Voice or video teleconsultation integration
+🌐 **Streamlit Dashboard**  
+👉 https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/
 
 ---
 
-## 📁 Repository Structure
+# ✨ Key Features
 
+## 📡 Real-Time IoT Monitoring
+- Continuous live patient vitals tracking
+- Simulated ESP32 device feed
+- Live ECG monitoring visualization
+- Real-time dashboard refresh
+
+---
+
+## ☁ AWS Cloud Integration
+
+AyushCare uses AWS services for scalable cloud healthcare monitoring.
+
+### Integrated AWS Services:
+- 🗄 **Amazon DynamoDB** → Patient vitals storage
+- 📨 **Amazon SNS** → Emergency SMS alerts
+- ☁ AWS Cloud Connectivity Status
+- 🔒 Secure health data transmission
+
+---
+
+## 🧠 AI Health Insights
+- AI-based patient risk analysis
+- Smart health score generation
+- Emergency risk prediction
+- Automated health recommendations
+
+### Example Predictions:
+- No immediate health risk detected
+- Oxygen trend stable
+- Continuous monitoring recommended
+- Critical oxygen fluctuation detected
+
+---
+
+## 🚨 Emergency Alert System
+Automatically triggers emergency mode when:
+- SpO₂ drops below safe levels
+- Temperature becomes critical
+- Heart rate abnormalities are detected
+
+### Emergency Features:
+- Emergency alert banner
+- AWS SNS notification support
+- Critical risk detection
+- Real-time monitoring escalation
+
+---
+
+## 🏥 Multi-Patient Monitoring Dashboard
+Hospital-style centralized monitoring system.
+
+### Includes:
+- Multiple patient overview
+- Risk categorization
+- Real-time patient status
+- Health analytics dashboard
+
+---
+
+## 📈 Advanced Healthcare Analytics
+- Live vitals charts
+- Historical patient trends
+- ECG simulation
+- Rural healthcare coverage map
+- Interactive Plotly visualizations
+
+---
+
+# 🧩 Technologies Used
+
+| Category | Technologies |
+|---|---|
+| Frontend | Streamlit, HTML, CSS |
+| Cloud | AWS DynamoDB, AWS SNS |
+| Data Visualization | Plotly, Pandas |
+| IoT | ESP32, MAX30102 |
+| Backend | Python |
+| AI Logic | Custom Risk Analysis Engine |
+| Database | DynamoDB + JSON History Storage |
+
+---
+
+# ⚙ System Architecture
+
+```text
+IoT Sensors → ESP32 → AWS Cloud → Streamlit Dashboard → AI Analysis → Emergency Alerts
+```
+
+---
+
+# 🛠 Components Used
+
+| Component | Description |
+|---|---|
+| ESP32 / NodeMCU | Wi-Fi-enabled IoT controller |
+| MAX30102 Sensor | Heart Rate + SpO₂ Sensor |
+| Temperature Sensor | Body Temperature Monitoring |
+| OLED/LCD | Local Display |
+| AWS DynamoDB | Cloud Database |
+| AWS SNS | Emergency Alerts |
+| Streamlit | Real-Time Dashboard |
+| Plotly | Interactive Graphs |
+
+---
+
+# 🖥 Dashboard Features
+
+## 🌿 Smart Rural Healthcare Interface
+Modern hospital-style UI designed for healthcare accessibility.
+
+### Includes:
+- Live status cards
+- Health score gauge
+- ECG monitor
+- Device feed simulation
+- AI predictions
+- Emergency timeline
+- Rural healthcare coverage map
+- Multi-patient monitoring
+
+---
+
+# 📊 Sample Health Metrics
+
+| Metric | Value |
+|---|---|
+| Heart Rate | 74 BPM |
+| SpO₂ | 98% |
+| Temperature | 36.8°C |
+| Health Score | 100/100 |
+| Risk Level | Low |
+
+---
+
+# 🧠 AI Risk Levels
+
+| Score Range | Risk Level |
+|---|---|
+| 85 – 100 | 🟢 Low |
+| 60 – 84 | 🟡 Moderate |
+| Below 60 | 🔴 Critical |
+
+---
+
+# 📁 Project Structure
+
+```text
 AyushCare/
-
-├── Arduino_Code/
-
-│ └── ayushcare_monitor.ino
-
-├── Mobile_Dashboard/
-
-│ └── blynk_setup_guide.pdf
-
-├── Circuit_Diagram/
-
-│ └── ayushcare_circuit.fzz
-
-├── UI_Mockups/
-
-│ └── doctor_dashboard_mockup.png
-
-├── Docs/
-
-│ └── project_report.pdf
-
-└── README.md
+│
+├── app.py
+├── users.json
+├── sample_vitals.json
+├── history.json
+├── requirements.txt
+│
+├── components/
+│   ├── sidebar.py
+│   ├── status_card.py
+│   ├── ai_predictions.py
+│   ├── charts.py
+│   ├── emergency.py
+│   ├── metrics.py
+│   ├── doctor_notes.py
+│   ├── patient_monitor.py
+│   ├── device_feed.py
+│   └── health_map.py
+│
+├── services/
+│   ├── aws_service.py
+│   ├── alerts.py
+│   ├── history_service.py
+│   ├── data_loader.py
+│   └── auth_service.py
+│
+├── views/
+│   ├── login.py
+│   ├── register.py
+│   └── dashboard.py
+```
 
 ---
 
-## 📦 Installation
+# 📦 Installation & Setup
 
-1. Clone this repo:
-   ```bash
-   git clone https://github.com/yourusername/ayushcare-iot.git
-   cd ayushcare-iot
-2. Open ayushcare_monitor.ino in Arduino IDE
+## 1️⃣ Clone Repository
 
-- Install libraries: Blynk, Adafruit_Sensor, MAX30100lib, etc.
+```bash
+git clone https://github.com/SaiMeghana14/AyushCare-IoT-Health.git
 
-3.Setup your Blynk template or Firebase project
+cd AyushCare-IoT-Health
+```
 
-- Follow instructions in Mobile_Dashboard/blynk_setup_guide.pdf
+---
 
-4.Upload code to ESP32/NodeMCU
+## 2️⃣ Install Dependencies
 
-- Power up and test sensors
+```bash
+pip install -r requirements.txt
+```
 
-- Monitor on Blynk or Firebase dashboard
+---
 
-👤 Author
-*K.N.V Sai Meghana* 
-B.Tech ECE | IoT & Embedded Systems
+## 3️⃣ Configure AWS Secrets
 
-🔗 GitHub: [View](https://github.com/SaiMeghana14)
+Create:
 
-🔗 LinkedIn: [View](https://www.linkedin.com/in/naga-venkata-sai-meghana-kovvada-131b51259)
+```text
+.streamlit/secrets.toml
+```
 
-🔗 Project Link
-👉 View project here ([View the dashboard](https://ayushcare-iot-health-pmksxk7ces2cg9rt54anm2.streamlit.app/))]
+Add:
 
-**Note**
-##Enter the following credentials- 
-     [Username - doctor and Password - 1234]
-     
-📃 License
+```toml
+AWS_ACCESS_KEY_ID = "YOUR_ACCESS_KEY"
+AWS_SECRET_ACCESS_KEY = "YOUR_SECRET_KEY"
+AWS_REGION = "ap-south-1"
+```
+
+---
+
+## 4️⃣ Run Streamlit App
+
+```bash
+streamlit run app.py
+```
+
+---
+
+# ☁ AWS Services Used
+
+## 🗄 Amazon DynamoDB
+Stores:
+- Patient vitals
+- Historical records
+- Monitoring data
+
+---
+
+## 📨 Amazon SNS
+Used for:
+- Emergency SMS alerts
+- Critical health notifications
+
+---
+
+# 🌍 Rural Healthcare Impact
+
+AyushCare aims to:
+- Improve healthcare accessibility
+- Support remote patient monitoring
+- Enable faster emergency response
+- Assist doctors in rural areas
+- Reduce healthcare infrastructure gaps
+
+---
+
+# 🔮 Future Enhancements
+
+- 🤖 Real AI/ML anomaly detection
+- 📹 Telemedicine integration
+- 📱 Mobile healthcare app
+- 🌐 AWS IoT Core integration
+- 📡 Real ESP32 live streaming
+- 🧬 Predictive health analytics
+- 🗣 Voice-based emergency alerts
+
+---
+
+# 👤 Author
+
+## **K.N.V Sai Meghana**
+B.Tech – Electronics & Communication Engineering (ECE)
+
+### 🔗 GitHub
+https://github.com/SaiMeghana14
+
+### 🔗 LinkedIn
+https://www.linkedin.com/in/naga-venkata-sai-meghana-kovvada131b51259
+
+---
+
+# 📄 License
+
 This project is licensed under the MIT License.
+
+---
+
+# ⭐ Support
+
+If you like this project, consider giving it a ⭐ on GitHub!
