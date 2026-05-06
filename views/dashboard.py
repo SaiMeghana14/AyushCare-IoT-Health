@@ -53,6 +53,19 @@ from services.alerts import (
 # --------------------------------------------------------------
 def page_dashboard():
 
+    st.markdown(f"""
+    <div style='
+    background:white;
+    padding:1rem;
+    border-radius:15px;
+    margin-bottom:1rem;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+    '>
+    <h3>👋 Welcome, {st.session_state.current_user}</h3>
+    <p>Real-time rural healthcare monitoring is active.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown(
         """
         <h1 style='color:#0077b6;'>
