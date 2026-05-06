@@ -6,6 +6,10 @@ from components.status_card import (
     render_status_card
 )
 
+from components.device_feed import (
+    render_device_feed
+)
+
 from components.metrics import (
     render_metrics
 )
@@ -22,6 +26,10 @@ from components.charts import (
     render_ecg,
     render_vitals_chart,
     render_history
+)
+
+from components.health_map import (
+    render_health_map
 )
 
 from components.emergency import (
@@ -53,6 +61,9 @@ from services.alerts import (
 # --------------------------------------------------------------
 def page_dashboard():
 
+    # ----------------------------------------------------------
+    # WELCOME CARD
+    # ----------------------------------------------------------
     st.markdown(f"""
     <div style='
     background:white;
@@ -61,11 +72,21 @@ def page_dashboard():
     margin-bottom:1rem;
     box-shadow:0 4px 10px rgba(0,0,0,0.08);
     '>
-    <h3>👋 Welcome, {st.session_state.current_user}</h3>
-    <p>Real-time rural healthcare monitoring is active.</p>
+
+    <h3>
+    👋 Welcome, {st.session_state.current_user}
+    </h3>
+
+    <p>
+    Real-time rural healthcare monitoring is active.
+    </p>
+
     </div>
     """, unsafe_allow_html=True)
-    
+
+    # ----------------------------------------------------------
+    # HERO SECTION
+    # ----------------------------------------------------------
     st.markdown(
         """
         <h1 style='color:#0077b6;'>
@@ -96,21 +117,21 @@ def page_dashboard():
         """,
         unsafe_allow_html=True
     )
-    
+
     # ----------------------------------------------------------
     # LIVE CLOUD STATUS
     # ----------------------------------------------------------
     c1, c2, c3, c4 = st.columns(4)
-    
+
     with c1:
         st.success("☁ AWS Connected")
-    
+
     with c2:
         st.success("📡 IoT Active")
-    
+
     with c3:
         st.success("🔒 Secure")
-    
+
     with c4:
         st.success("🧠 AI Running")
 
@@ -174,9 +195,14 @@ def page_dashboard():
     render_timeline()
 
     # ----------------------------------------------------------
-    # PATIENT MONITOR
+    # MULTI PATIENT MONITOR
     # ----------------------------------------------------------
     render_patient_monitor()
+
+    # ----------------------------------------------------------
+    # LIVE DEVICE FEED
+    # ----------------------------------------------------------
+    render_device_feed()
 
     # ----------------------------------------------------------
     # METRICS
@@ -186,6 +212,26 @@ def page_dashboard():
         risk_level,
         risk_score
     )
+
+    # ----------------------------------------------------------
+    # ECG MONITOR
+    # ----------------------------------------------------------
+    render_ecg()
+
+    # ----------------------------------------------------------
+    # VITALS CHART
+    # ----------------------------------------------------------
+    render_vitals_chart(vitals)
+
+    # ----------------------------------------------------------
+    # HEALTH COVERAGE MAP
+    # ----------------------------------------------------------
+    render_health_map()
+
+    # ----------------------------------------------------------
+    # HISTORY DASHBOARD
+    # ----------------------------------------------------------
+    render_history(selected)
 
     # ----------------------------------------------------------
     # AI PREDICTIONS
@@ -198,22 +244,7 @@ def page_dashboard():
     render_doctor_notes()
 
     # ----------------------------------------------------------
-    # ECG
-    # ----------------------------------------------------------
-    render_ecg()
-
-    # ----------------------------------------------------------
-    # VITALS CHART
-    # ----------------------------------------------------------
-    render_vitals_chart(vitals)
-
-    # ----------------------------------------------------------
-    # HISTORY
-    # ----------------------------------------------------------
-    render_history(selected)
-
-    # ----------------------------------------------------------
-    # DOWNLOAD
+    # DOWNLOAD REPORT
     # ----------------------------------------------------------
     render_download(selected, vitals)
 
@@ -226,8 +257,13 @@ def page_dashboard():
             """
             <style>
 
-            body, .stApp {
-                background-color:#111 !important;
+            .stApp {
+                background: linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #111827
+                );
+
                 color:white !important;
             }
 
