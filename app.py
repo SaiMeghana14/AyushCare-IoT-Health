@@ -10,7 +10,8 @@ from pages.dashboard import page_dashboard
 st.set_page_config(
     page_title="AyushCare",
     page_icon="🩺",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # --------------------------------------------------------------
