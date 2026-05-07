@@ -247,7 +247,21 @@ def page_dashboard():
     # DOWNLOAD REPORT
     # ----------------------------------------------------------
     render_download(selected, vitals)
+    generate_report(
+    "patient_report.pdf",
+    vitals
+    )
 
+    with open(
+        "patient_report.pdf",
+        "rb"
+    ) as pdf:
+    
+        st.download_button(
+            "📄 Download PDF Report",
+            pdf,
+            file_name="patient_report.pdf"
+        )
     # ----------------------------------------------------------
     # DARK MODE
     # ----------------------------------------------------------
