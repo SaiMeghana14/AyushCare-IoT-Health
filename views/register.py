@@ -84,7 +84,7 @@ def page_register():
             users[username] = {
                 "name": full_name,
                 "email": email,
-                "password": password
+                "password": hash_password(password)
             }
 
             save_users(users)
