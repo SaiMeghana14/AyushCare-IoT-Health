@@ -1,7 +1,9 @@
 import streamlit as st
 import time
-from services.auth_service import load_users
-
+from services.auth_service import (
+    load_users,
+    verify_password
+)
 
 def page_login():
 
