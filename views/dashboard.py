@@ -22,6 +22,10 @@ from components.doctor_notes import (
     render_doctor_notes
 )
 
+from components.voice_alert import (
+    play_voice_alert
+)
+
 from components.charts import (
     render_ecg,
     render_vitals_chart,
@@ -55,6 +59,27 @@ from services.alerts import (
     calculate_risk
 )
 
+from services.pdf_service import (
+    generate_report
+)
+
+st.markdown("""
+<style>
+
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    .block-container {
+        padding: 1rem !important;
+    }
+
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # --------------------------------------------------------------
 # DASHBOARD PAGE
@@ -151,7 +176,17 @@ def page_dashboard():
     # ----------------------------------------------------------
     # LOAD DATA
     # ----------------------------------------------------------
-    data = load_json_data()
+
+    if data_source == "Local JSON":
+    
+        data = load_json_data()
+    
+    else:
+    
+        # Temporary fallback until
+        # AWS IoT Core streaming is connected
+    
+        data = load_json_data()
 
     patients = list(data.keys())
 
@@ -191,7 +226,11 @@ def page_dashboard():
     # EMERGENCY MODE
     # ----------------------------------------------------------
     render_emergency(risk_level)
-
+    if risk_level == "Critical":
+    
+        play_voice_alert(
+            f"Emergency detected for patient {selected}"
+        )
     render_timeline()
 
     # ----------------------------------------------------------
@@ -241,17 +280,38 @@ def page_dashboard():
     # ----------------------------------------------------------
     # DOCTOR NOTES
     # ----------------------------------------------------------
-    render_doctor_notes()
+    render_doctor_notes(selected)
 
     # ----------------------------------------------------------
     # DOWNLOAD REPORT
     # ----------------------------------------------------------
     render_download(selected, vitals)
+    
+    report_data = {
+    
+        "patient": selected,
+    
+        "risk_level": risk_level,
+    
+        "risk_score": risk_score,
+    
+        "heart_rate": vitals["heart_rate"],
+    
+        "spo2": vitals["spo2"],
+    
+        "temperature": vitals["temperature"],
+    
+        "bp": vitals["bp"],
+    
+        "respiratory_rate":
+            vitals["respiratory_rate"]
+    }
+    
     generate_report(
-    "patient_report.pdf",
-    vitals
+        "patient_report.pdf",
+        report_data
     )
-
+    
     with open(
         "patient_report.pdf",
         "rb"
@@ -260,7 +320,8 @@ def page_dashboard():
         st.download_button(
             "📄 Download PDF Report",
             pdf,
-            file_name="patient_report.pdf"
+            file_name="patient_report.pdf",
+            mime="application/pdf"
         )
     # ----------------------------------------------------------
     # DARK MODE
