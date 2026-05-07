@@ -1,6 +1,10 @@
 streamlit
-boto3
 plotly
-numpy
 pandas
+numpy
+boto3
 streamlit-autorefresh
+scikit-learn
+joblib
+bcrypt
+reportlab
