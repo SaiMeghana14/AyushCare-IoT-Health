@@ -17,6 +17,10 @@ def render_emergency(risk_level):
         🚨 EMERGENCY ALERT ACTIVE 🚨
         </div>
         """, unsafe_allow_html=True)
+        
+        play_voice_alert(
+        "Emergency detected for patient P001"
+    )
 
         st.error("📞 Emergency contact notification triggered")
 
