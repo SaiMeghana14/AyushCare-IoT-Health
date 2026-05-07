@@ -34,7 +34,7 @@ def page_login():
 
         if username in users:
 
-            if password == users[username]["password"]:
+            if verify_password(password,users[username]["password"]):
 
                 st.success("✅ Login Successful")
 
