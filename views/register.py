@@ -4,9 +4,9 @@ import re
 
 from services.auth_service import (
     load_users,
-    save_users
+    save_users,
+    hash_password
 )
-
 
 def page_register():
 
