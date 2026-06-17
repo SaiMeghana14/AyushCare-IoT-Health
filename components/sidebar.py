@@ -37,6 +37,7 @@ def render_sidebar():
         "📡 Device Status",
         expanded=True
     ):
+        
         st.sidebar.success("ESP32 Connected")
         st.sidebar.success("MAX30102 Active")
         st.sidebar.success("Temperature Sensor Online")
