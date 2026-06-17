@@ -22,9 +22,22 @@ def render_patient_monitor():
 
 def render_download(selected, vitals):
 
+    safe_vitals = {}
+
+    for k, v in vitals.items():
+
+        if hasattr(v, "item"):
+            safe_vitals[k] = v.item()
+
+        else:
+            safe_vitals[k] = v
+
     st.download_button(
-        label="📥 Download Patient Report",
-        data=json.dumps({selected: vitals}, indent=2),
+        label="⬇ Download Patient Data",
+        data=json.dumps(
+            {selected: safe_vitals},
+            indent=2
+        ),
         file_name=f"{selected}_report.json",
         mime="application/json"
     )
