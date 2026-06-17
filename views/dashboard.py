@@ -193,9 +193,23 @@ def page_dashboard():
     )
 
     # ----------------------------------------------------------
-    # CSV UPLOAD
+    # LOAD DATA
     # ----------------------------------------------------------
-    if data_source == "Upload CSV":
+    
+    if data_source == "Local JSON":
+    
+        data = load_json_data()
+    
+        patients = list(data.keys())
+    
+        selected = st.sidebar.selectbox(
+            "👤 Select Patient",
+            patients
+        )
+    
+        vitals = data[selected]
+    
+    elif data_source == "Upload CSV":
     
         csv_df = upload_csv()
     
@@ -228,30 +242,11 @@ def page_dashboard():
                 "bp": latest["bp"],
                 "respiratory_rate": latest["respiratory_rate"]
             }
-
-    # ----------------------------------------------------------
-    # LOAD DATA
-    # ----------------------------------------------------------
-
-    if data_source == "Local JSON":
     
-        data = load_json_data()
+        else:
     
-    else:
-    
-        # Temporary fallback until
-        # AWS IoT Core streaming is connected
-    
-        data = load_json_data()
-
-    patients = list(data.keys())
-
-    selected = st.sidebar.selectbox(
-        "🧑 Select Patient",
-        patients
-    )
-
-    vitals = data[selected]
+            st.warning("📂 Upload a CSV file to continue")
+            st.stop()
 
     # ----------------------------------------------------------
     # SAVE TO AWS
