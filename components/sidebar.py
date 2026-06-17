@@ -12,7 +12,9 @@ def render_sidebar():
         ["Local JSON", "Upload CSV"]
     )
 
-    show_gauge = st.sidebar.checkbox("📊 Show Gauge Meters")
+    show_gauge = st.sidebar.checkbox(
+        "📊 Show Gauge Meters",
+        value=True)
 
     if st.sidebar.button("🚪 Logout"):
         st.session_state.current_user = None
@@ -20,14 +22,21 @@ def render_sidebar():
         st.rerun()
 
     st.sidebar.markdown("---")
-    with st.sidebar.expander("☁ AWS Cloud Status", expanded=True):
-        st.sidebar.success("☁ AWS IoT Connected")
-        st.sidebar.success("🗄 DynamoDB Active")
-        st.sidebar.success("📨 SNS Alerts Enabled")
-        st.sidebar.success("🤖 AI Insights Running")
+    with st.sidebar.expander(
+        "☁ AWS Cloud Status",
+        expanded=True
+    ):
+    
+        st.success("☁ AWS IoT Connected")
+        st.success("🗄 DynamoDB Active")
+        st.success("📨 SNS Alerts Enabled")
+        st.success("🤖 AI Insights Running")
 
     st.sidebar.markdown("---")
-    with st.sidebar.expander("📡 Device Status"):
+    with st.sidebar.expander(
+        "📡 Device Status",
+        expanded=True
+    ):
         st.sidebar.success("ESP32 Connected")
         st.sidebar.success("MAX30102 Active")
         st.sidebar.success("Temperature Sensor Online")
