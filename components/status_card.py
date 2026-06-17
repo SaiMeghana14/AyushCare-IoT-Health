@@ -23,7 +23,12 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-def render_status_card(risk_score, risk_level, risk_color, patient_status):
+def render_status_card(
+    risk_score, 
+    risk_level, 
+    risk_color, 
+    patient_status, 
+    show_gauge=True):
 
     col1, col2 = st.columns([3,2])
 
@@ -57,36 +62,42 @@ def render_status_card(risk_score, risk_level, risk_color, patient_status):
 
     with col2:
 
-        score_fig = go.Figure(go.Indicator(
-            mode="gauge+number",
-            value=risk_score,
-            title={
-    "text": "<b>Health Score</b>",
-    "font": {
-        "size": 28,
-        "color": "#0f172a"
-    }
-},
-            gauge={
-                "axis": {"range": [0, 100]},
-                "bar": {"color": "#00d4ff"}
-            }
-        ))
-
-        score_fig.update_layout(
-
-    height=320,
-
-    template="plotly_dark",
-
-    paper_bgcolor="rgba(0,0,0,0)",
-
-    plot_bgcolor="rgba(0,0,0,0)",
-
-    font=dict(
-        color="#0f172a",
-        size=22
-    )
-)
-
-        st.plotly_chart(score_fig, use_container_width=True)
+        if show_gauge:
+    
+            score_fig = go.Figure(
+                go.Indicator(
+                    mode="gauge+number",
+                    value=risk_score,
+                    title={
+                        "text": "<b>Health Score</b>",
+                        "font": {
+                            "size": 30,
+                            "color": "#000000"
+                        }
+                    },
+                    gauge={
+                        "axis": {
+                            "range": [0, 100]
+                        },
+                        "bar": {
+                            "color": "#00d4ff"
+                        }
+                    }
+                )
+            )
+    
+            score_fig.update_layout(
+                height=320,
+                template="plotly_dark",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(
+                    color="#000000",
+                    size=24
+                )
+            )
+    
+            st.plotly_chart(
+                score_fig,
+                use_container_width=True
+            )
