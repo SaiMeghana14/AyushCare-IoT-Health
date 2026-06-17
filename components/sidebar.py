@@ -27,10 +27,10 @@ def render_sidebar():
         expanded=True
     ):
     
-        st.success("☁ AWS IoT Connected")
-        st.success("🗄 DynamoDB Active")
-        st.success("📨 SNS Alerts Enabled")
-        st.success("🤖 AI Insights Running")
+        st.info("☁ AWS IoT Connected")
+        st.info("🗄 DynamoDB Active")
+        st.info("📨 SNS Alerts Enabled")
+        st.info("🤖 AI Insights Running")
 
     st.sidebar.markdown("---")
     with st.sidebar.expander(
