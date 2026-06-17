@@ -28,3 +28,19 @@ def render_download(selected, vitals):
         file_name=f"{selected}_report.json",
         mime="application/json"
     )
+
+def highlight_status(row):
+    if row["Risk"] == "High":
+        return ["background-color:#ffcccc"] * len(row)
+
+    elif row["Risk"] == "Moderate":
+        return ["background-color:#fff4cc"] * len(row)
+
+    return ["background-color:#d4edda"] * len(row)
+    
+    st.dataframe(
+        df.style.apply(
+            highlight_status,
+            axis=1
+        )
+    )
