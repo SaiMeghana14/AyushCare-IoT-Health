@@ -106,6 +106,23 @@ Hospital-style centralized monitoring system.
 
 ---
 
+# 🏗️ AWS IoT Architecture
+
+```text
+ESP32 Sensors
+      ↓
+AWS IoT Core
+      ↓
+AWS Lambda
+      ↓
+Amazon DynamoDB
+      ↓
+AyushCare Streamlit Dashboard
+      ↓
+Amazon SNS Alerts
+```
+---
+
 # 🧩 Technologies Used
 
 | Category | Technologies |
