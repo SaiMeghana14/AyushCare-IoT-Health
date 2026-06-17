@@ -196,7 +196,17 @@ def page_dashboard():
     # CSV UPLOAD
     # ----------------------------------------------------------
     if data_source == "Upload CSV":
-        upload_csv()
+    
+        csv_vitals, csv_patient, csv_df = upload_csv()
+    
+        if csv_vitals:
+    
+            vitals = csv_vitals
+            selected = csv_patient
+    
+    else:
+    
+        data = load_json_data()
 
     # ----------------------------------------------------------
     # LOAD DATA
