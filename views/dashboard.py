@@ -323,11 +323,12 @@ def page_dashboard():
     # ----------------------------------------------------------
     # METRICS
     # ----------------------------------------------------------
-    render_metrics(
-        vitals,
-        risk_level,
-        risk_score
-    )
+    if show_gauge:
+        render_metrics(
+            vitals,
+            risk_level,
+            risk_score
+        )
 
     # ----------------------------------------------------------
     # ECG MONITOR
