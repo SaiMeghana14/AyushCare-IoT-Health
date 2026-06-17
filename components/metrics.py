@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 def render_metrics(vitals, risk_level, risk_score):
 
     st.subheader("🧑‍⚕️ Live Patient Vitals")
