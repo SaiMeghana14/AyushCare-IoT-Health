@@ -28,6 +28,6 @@ def upload_csv():
         ):
             st.dataframe(df)
 
-        return vitals, selected, df
+        return df
 
-    return None, None, None
+    return None
