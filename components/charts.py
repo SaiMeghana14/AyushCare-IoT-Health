@@ -14,29 +14,88 @@ def render_ecg():
 
     st.subheader("❤️ Live ECG Monitor")
 
-    x = np.linspace(0, 10, 500)
+    with st.container(border=True):
 
-    y = (
-        np.sin(15 * x)
-        + 0.3 * np.sin(50 * x)
-        + 0.1 * np.random.randn(len(x))
-    )
+        x = np.linspace(0, 10, 500)
 
-    fig_ecg = px.line(x=x, y=y)
+        y = (
+            np.sin(15 * x)
+            + 0.3 * np.sin(50 * x)
+            + 0.1 * np.random.randn(len(x))
+        )
 
-    fig_ecg.update_layout(
-        height=250,
-        template="plotly_dark",
-        showlegend=False,
-        xaxis_title="Time",
-        yaxis_title="Signal"
-    )
+        fig_ecg = go.Figure()
 
-    st.plotly_chart(
-        fig_ecg,
-        use_container_width=True
-    )
+        fig_ecg.add_trace(
+            go.Scatter(
+                x=x,
+                y=y,
+                mode="lines",
+                line=dict(
+                    color="#00FF66",
+                    width=2
+                ),
+                name="ECG"
+            )
+        )
 
+        fig_ecg.update_layout(
+
+            paper_bgcolor="black",
+
+            plot_bgcolor="black",
+
+            font=dict(
+                color="#00FF66",
+                size=12
+            ),
+
+            height=320,
+
+            showlegend=False,
+
+            xaxis=dict(
+                title="Time",
+                showgrid=True,
+                gridcolor="#003300",
+                zeroline=False,
+                showticklabels=False
+            ),
+            
+            yaxis=dict(
+                title="Signal",
+                showgrid=True,
+                gridcolor="#003300",
+                zeroline=False,
+                showticklabels=False
+            ),
+
+            margin=dict(
+                l=20,
+                r=20,
+                t=20,
+                b=20
+            )
+        )
+
+        st.plotly_chart(
+            fig_ecg,
+            use_container_width=True
+        )
+
+        st.info(
+            "🟢 ECG Status: Normal Sinus Rhythm Detected"
+        )
+        c1, c2, c3 = st.columns(3)
+
+        with c1:
+            st.success("🟢 Lead Connected")
+        
+        with c2:
+            st.success("📡 Signal Stable")
+        
+        with c3:
+            st.success("❤️ BPM Detected")
 
 # --------------------------------------------------------------
 # PREMIUM VITALS CHART
@@ -73,7 +132,7 @@ def render_vitals_chart(vitals):
     )
 
     fig.update_layout(
-        height=450,
+        height=400,
         template="plotly_dark",
         title="Real-Time Patient Vitals",
         xaxis_title="Health Metrics",
@@ -114,7 +173,7 @@ def render_history(selected):
         )
 
         fig_history.update_layout(
-            height=450,
+            height=400,
             title="Historical Health Trends"
         )
 
