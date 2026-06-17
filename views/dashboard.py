@@ -197,16 +197,37 @@ def page_dashboard():
     # ----------------------------------------------------------
     if data_source == "Upload CSV":
     
-        csv_vitals, csv_patient, csv_df = upload_csv()
+        csv_df = upload_csv()
     
-        if csv_vitals:
+        if csv_df is not None:
     
-            vitals = csv_vitals
-            selected = csv_patient
+            patients = (
+                csv_df["patient_id"]
+                .unique()
+                .tolist()
+            )
     
-    else:
+            selected = st.sidebar.selectbox(
+                "👤 Select Patient",
+                patients
+            )
     
-        data = load_json_data()
+            patient_df = (
+                csv_df[
+                    csv_df["patient_id"] == selected
+                ]
+                .sort_values("timestamp")
+            )
+    
+            latest = patient_df.iloc[-1]
+    
+            vitals = {
+                "heart_rate": latest["heart_rate"],
+                "spo2": latest["spo2"],
+                "temperature": latest["temperature"],
+                "bp": latest["bp"],
+                "respiratory_rate": latest["respiratory_rate"]
+            }
 
     # ----------------------------------------------------------
     # LOAD DATA
