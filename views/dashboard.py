@@ -144,6 +144,31 @@ def page_dashboard():
     )
 
     # ----------------------------------------------------------
+    # ANALYTICS OVERVIEW
+    # ----------------------------------------------------------
+    
+    c1, c2, c3, c4 = st.columns(4)
+    
+    c1.metric(
+        "👨‍⚕️ Patients Online",
+        "24"
+    )
+    
+    c2.metric(
+        "🚨 Alerts Today",
+        "2"
+    )
+    
+    c3.metric(
+        "🏡 Villages Covered",
+        "8"
+    )
+    
+    c4.metric(
+        "☁ AWS Uptime",
+        "99.9%"
+    )
+    # ----------------------------------------------------------
     # LIVE CLOUD STATUS
     # ----------------------------------------------------------
     c1, c2, c3, c4 = st.columns(4)
@@ -234,6 +259,28 @@ def page_dashboard():
     render_timeline()
 
     # ----------------------------------------------------------
+    # NOTIFICATION CENTER
+    # ----------------------------------------------------------
+    
+    st.subheader("🔔 Notification Center")
+    
+    notifications = [
+    
+        "AWS Sync Successful",
+    
+        "Vitals Received",
+    
+        "AI Analysis Completed",
+    
+        "Doctor Review Pending"
+    
+    ]
+    
+    for n in notifications:
+    
+        st.info(n)
+        
+    # ----------------------------------------------------------
     # MULTI PATIENT MONITOR
     # ----------------------------------------------------------
     render_patient_monitor()
@@ -242,6 +289,36 @@ def page_dashboard():
     # LIVE DEVICE FEED
     # ----------------------------------------------------------
     render_device_feed()
+
+    import random
+    
+    packet_count = random.randint(
+        4000,
+        6000
+    )
+    
+    c1, c2 = st.columns(2)
+    
+    with c1:
+    
+        st.metric(
+            "📦 Packets Received",
+            packet_count,
+            "+12"
+        )
+    
+    with c2:
+    
+        st.metric(
+            "📡 Signal Quality",
+            "Excellent"
+        )
+    
+    st.progress(95)
+    
+    st.caption(
+        "Signal Quality: Excellent"
+    )
 
     # ----------------------------------------------------------
     # METRICS
@@ -267,6 +344,9 @@ def page_dashboard():
     # ----------------------------------------------------------
     render_health_map()
 
+    st.success(
+        "🏡 Rural Healthcare Coverage Expanded Across Multiple Villages"
+    )
     # ----------------------------------------------------------
     # HISTORY DASHBOARD
     # ----------------------------------------------------------
@@ -346,3 +426,32 @@ def page_dashboard():
             """,
             unsafe_allow_html=True
         )
+
+# ----------------------------------------------------------
+# FOOTER
+# ----------------------------------------------------------
+
+st.markdown("---")
+
+st.markdown(
+"""
+<div style='
+text-align:center;
+padding:20px;
+color:#666;
+'>
+
+🌿 AyushCare v2.0
+
+<br>
+
+AWS + IoT + AI Rural Healthcare Platform
+
+<br><br>
+
+Built by K.N.V. Sai Meghana
+
+</div>
+""",
+unsafe_allow_html=True
+)
