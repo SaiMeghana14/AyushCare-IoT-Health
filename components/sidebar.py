@@ -20,19 +20,17 @@ def render_sidebar():
         st.rerun()
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("## ☁ AWS Cloud Status")
-
-    st.sidebar.success("☁ AWS IoT Connected")
-    st.sidebar.success("🗄 DynamoDB Active")
-    st.sidebar.success("📨 SNS Alerts Enabled")
-    st.sidebar.success("🤖 AI Insights Running")
+    with st.sidebar.expander("☁ AWS Cloud Status", expanded=True):
+        st.sidebar.success("☁ AWS IoT Connected")
+        st.sidebar.success("🗄 DynamoDB Active")
+        st.sidebar.success("📨 SNS Alerts Enabled")
+        st.sidebar.success("🤖 AI Insights Running")
 
     st.sidebar.markdown("---")
-    st.sidebar.markdown("## 📡 Device Status")
-
-    st.sidebar.success("ESP32 Connected")
-    st.sidebar.success("MAX30102 Active")
-    st.sidebar.success("Temperature Sensor Online")
+    with st.sidebar.expander("📡 Device Status"):
+        st.sidebar.success("ESP32 Connected")
+        st.sidebar.success("MAX30102 Active")
+        st.sidebar.success("Temperature Sensor Online")
     
     st.sidebar.markdown("---")
     st.sidebar.info(
