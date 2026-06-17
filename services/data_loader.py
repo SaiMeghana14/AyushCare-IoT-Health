@@ -23,28 +23,6 @@ def upload_csv():
             df["timestamp"]
         )
 
-        patients = df["patient_id"].unique().tolist()
-
-        selected = st.sidebar.selectbox(
-            "👤 Select Patient",
-            patients
-        )
-
-        patient_df = (
-            df[df["patient_id"] == selected]
-            .sort_values("timestamp")
-        )
-
-        latest = patient_df.iloc[-1]
-
-        vitals = {
-            "heart_rate": latest["heart_rate"],
-            "spo2": latest["spo2"],
-            "temperature": latest["temperature"],
-            "bp": latest["bp"],
-            "respiratory_rate": latest["respiratory_rate"]
-        }
-
         with st.expander(
             "📄 View Uploaded CSV Data"
         ):
