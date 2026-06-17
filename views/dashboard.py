@@ -244,7 +244,8 @@ def page_dashboard():
         risk_score,
         risk_level,
         risk_color,
-        patient_status
+        patient_status,
+        show_gauge
     )
 
     # ----------------------------------------------------------
