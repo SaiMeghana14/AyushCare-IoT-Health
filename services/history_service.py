@@ -1,18 +1,28 @@
 import json
 import os
-from datetime import datetime
 
 HISTORY_FILE = "history.json"
 
 
 def load_history():
 
-    if os.path.exists(HISTORY_FILE):
-        with open(HISTORY_FILE, "r") as f:
+    if not os.path.exists(
+        HISTORY_FILE
+    ):
+        return {}
+
+    try:
+
+        with open(
+            HISTORY_FILE,
+            "r"
+        ) as f:
+
             return json.load(f)
 
-    return {}
+    except json.JSONDecodeError:
 
+        return {}
 
 def save_history(patient_id, vitals):
 
